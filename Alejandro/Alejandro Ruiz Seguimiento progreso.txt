@@ -1,0 +1,21 @@
+Diario de progreso del tragaperras:
+
+Día 1: 03/02/2021
+
+Comienzo con el programa para hacer el juego del tragaperras.
+Acabo el programa de la tragaperras, decide si ganas, pierdes,si tienes dinero o no y lo que pasa cuando no tines dinero.
+
+Día 2: 04/02/2021
+
+Pulir el programa de de la tragaperras, añado más premios.
+Crear un módulo para mostrar las imagenes que obtines de la tragaperras.
+Acabo el módulo, te muestra las imagenes en la misma línea, pero no es infalible, puede mostrar las tres imagenes iguales, sin que gane premio.
+
+Día 3: 05/02/2021
+
+Pulir el programa de la tragaperras, añadir un contador que indica el número de veces que has jugado, y implemento el modulo para las imagenes.
+Pulir el módulo, resolviendo el problema de las tres imágenes iguales sin que te toque premio.
+Implemento el módulo en que muestra las imagenes.
+
+
+
