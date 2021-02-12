@@ -17,7 +17,7 @@ lista[posx][posy] = '    O     '
 
 def busqueda():
     damela = 0
-    for i in range(12):
+    for i in range(13):
         if lista[2][i] == '    O     ':
             damela = i
 
@@ -32,13 +32,16 @@ def key_recorder(key):
     key = str(key).replace("'", "")
     
     if key == 'Key.right' and posy != 13:
-        # if lista[0][0] ==  '    O     ' :
-        #     lista[posx][posy],lista[1][1] = lista[1][1],lista[posx][posy]
-        # else:
-        lista[posx][posy],lista[posx][posy+1] = lista[posx][posy+1],lista[posx][posy]
-        # lista[posx][posy],lista[1][1] = lista[1][1],lista[posx][posy]
-        
-        posy = posy + 1
+
+        if lista[3][3] ==  '    O     ':
+            posx = 3
+            posy = 3
+        elif lista[4][6] ==  '    O     ':
+            posx = 4
+            posy = 6
+        else:
+            lista[posx][posy],lista[posx][posy+1] = lista[posx][posy+1],lista[posx][posy]
+            posy = posy + 1
         if posy >= 13:
             posy = 13
             
@@ -53,6 +56,12 @@ def key_recorder(key):
             posy = 0
             lista[2][1] = '          ' 
             lista[0][0] = '    O     '
+        elif lista[3][1] ==  '    O     ':
+            posx = 3
+            posy = 1
+        elif lista[4][1] ==  '    O     ':
+            posx = 4
+            posy = 1
         else:
              lista[posx][posy],lista[posx][posy-1] = lista[posx][posy-1],lista[posx][posy]
              posy = posy - 1
@@ -67,6 +76,32 @@ def key_recorder(key):
             posy = 1
             lista[2][posy_2] = '          ' 
             lista[3][1] = '    O     '
+        elif lista[2][5] ==  '    O     ' or lista[2][6] ==  '    O     ' or lista[2][7] ==  '    O     ' or lista[2][8] ==  '    O     ':
+            posx = 3
+            posy = 2
+            lista[2][posy_2] = '          ' 
+            lista[3][2] = '    O     '
+        elif lista[2][9] ==  '    O     ' or lista[2][10] ==  '    O     ' or lista[2][11] ==  '    O     ' or lista[2][12] ==  '    O     ':
+            posx = 3
+            posy = 3
+            lista[2][posy_2] = '          ' 
+            lista[3][3] = '    O     '
+        elif lista[3][2] ==  '    O     ':
+            posx = 4
+            posy = 3
+            lista[3][2] = '          ' 
+            lista[4][3] = '    O     '
+        elif lista[3][3] ==  '    O     ':
+            posx = 4
+            posy = 5
+            lista[3][3] = '          ' 
+            lista[4][5] = '    O     '
+        elif lista[0][0] ==  '    O     ':
+            posx = 0
+            posy = 0
+        elif lista[2][13] ==  '    O     ':
+            posx = 2
+            posy = 13
         else:
             lista[posx][posy],lista[posx+1][posy] = lista[posx+1][posy],lista[posx][posy]
             posx = posx + 1
@@ -74,8 +109,45 @@ def key_recorder(key):
             posx = 4
 
     elif key == 'Key.up' and posx != 0:
-        lista[posx][posy],lista[posx-1][posy] = lista[posx-1][posy],lista[posx][posy]
-        posx = posx - 1
+
+        if lista[3][2] ==  '    O     ':
+            posx = 2
+            posy = 6
+            lista[3][2] = '          ' 
+            lista[2][6] = '    O     '
+        elif lista[3][3] ==  '    O     ':
+            posx = 2
+            posy = 10
+            lista[3][3] = '          ' 
+            lista[2][10] = '    O     '
+        elif lista[4][2] ==  '    O     ':
+            posx = 3
+            posy = 1
+            lista[4][2] = '          ' 
+            lista[3][1] = '    O     '
+        elif lista[4][3] ==  '    O     ':
+            posx = 3
+            posy = 2
+            lista[4][3] = '          ' 
+            lista[3][2] = '    O     '
+        elif lista[4][4] ==  '    O     ':
+            posx = 3
+            posy = 2
+            lista[4][4] = '          ' 
+            lista[3][2] = '    O     '
+        elif lista[4][5] ==  '    O     ':
+            posx = 3
+            posy = 3
+            lista[4][5] = '          ' 
+            lista[3][3] = '    O     '
+        elif lista[4][6] ==  '    O     ':
+            posx = 3
+            posy = 3
+            lista[4][6] = '          ' 
+            lista[3][3] = '    O     '
+        else:    
+            lista[posx][posy],lista[posx-1][posy] = lista[posx-1][posy],lista[posx][posy]
+            posx = posx - 1
         if posx <= 0:
             posx = 0
     
@@ -121,6 +193,8 @@ def display():
 
 while True:
     clear()
+    for i in lista:
+        print(i)
     display()
     print(busqueda())
     posy_2 = busqueda()
@@ -128,5 +202,3 @@ while True:
     with Listener(on_press=key_recorder) as l:
         l.join()
 
-for i in lista:
-    print(i)
