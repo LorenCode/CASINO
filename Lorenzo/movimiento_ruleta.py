@@ -55,40 +55,72 @@ def ruleta():
 
     ''')
 
-posx = 0
-posy = 6
 
+# Movimiento de la pelota en el tablero
+velocidad_vueltas = 0.05
+for a in range(3):
 
-for a in range(6):
-    clear()
-    lista_ruleta[posx][posy] = ' ● '
-    lista_ruleta[posx][posy-1] = '   '
-    posy += 1
-    ruleta()
-    sleep(0.2)
+    velocidad_rotacion = velocidad_vueltas
 
+    posx = 0
+    posy = 6
 
-
-if lista_ruleta[0][11] == ' ● ':
-    lista_ruleta[0][11] = '   '
-    for b in range(1,8):
+    for a in range(6):
         clear()
-        lista_ruleta[b][1] = ' ● '
-        lista_ruleta[b-1][1] = '   '
+        lista_ruleta[posx][posy] = ' ● '
+        lista_ruleta[posx][posy-1] = '   '
+        posy += 1
         ruleta()
-        sleep(0.2)
+        sleep(velocidad_rotacion)
 
 
-posy = 11
 
-for a in range(12):
-    clear()
-    lista_ruleta[8][posy-1] = ' ● '
-    posy = -1
-    lista_ruleta[8][posy] = '   '
-    
-    ruleta()
-    sleep(0.2)
+    if lista_ruleta[0][11] == ' ● ':
+        lista_ruleta[0][11] = '   '
+        for b in range(1,8):
+            clear()
+            lista_ruleta[b][1] = ' ● '
+            lista_ruleta[b-1][1] = '   '
+            ruleta()
+            sleep(velocidad_rotacion)
+
+
+    for a in range(12-1,-1,-1):
+        clear()
+        if lista_ruleta[7][1] == ' ● ':
+            lista_ruleta[7][1] = '   '
+            lista_ruleta[8][11] = ' ● '
+        else:
+            lista_ruleta[8][a] = ' ● '
+            lista_ruleta[8][a+1] = '   '
+        
+        ruleta()
+        sleep(velocidad_rotacion)
+
+    for a in range(8-1,-1,-1):
+        clear()
+        if lista_ruleta[8][0] == ' ● ':
+            lista_ruleta[8][0] = '   '
+            lista_ruleta[7][0] = ' ● '
+        else:
+            lista_ruleta[a][0] = ' ● '
+            lista_ruleta[a+1][0] = '   '
+        
+        ruleta()
+        sleep(velocidad_rotacion)
+
+    for a in range(1,6):
+        clear()
+        if lista_ruleta[0][0] == ' ● ':
+            lista_ruleta[0][0] = '   '
+            lista_ruleta[0][1] = ' ● '
+        else:
+            lista_ruleta[0][a] = ' ● '
+            lista_ruleta[0][a-1] = '   '
+        
+        ruleta()
+        sleep(velocidad_rotacion)
+    velocidad_vueltas += 0.05
 
 for c in lista_ruleta:
     print(c)
