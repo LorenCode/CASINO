@@ -2,9 +2,13 @@ from time import sleep
 import os
 from pynput.keyboard import Listener
 from colorama import init, Fore, Back, Style
+from random import choice
+import movimiento_ruleta
 
 clear = lambda: os.system('cls')
 
+
+# Resultado aleatoria
 random = "1"
 
 # Se crean las listas para almacenar el tablero
@@ -43,8 +47,9 @@ posy = 2
 
 lista[posx][posy] = '    O     '
 
-#Busca en la lista 2 la posición del jugador
+
 def busqueda():
+    """Busca en la lista 2 la posición del jugador"""
     damela = 0
     for i in range(13):
         if lista[2][i] == '    O     ':
@@ -52,8 +57,9 @@ def busqueda():
 
     return damela
 
-#Movimientos del jugador
+
 def key_recorder(key):
+    """Movimientos del jugador"""
     global posx
     global posy
     global lista
@@ -201,11 +207,16 @@ def key_recorder(key):
             d_fichas[b_posicion()] += 50
         else:
             d_fichas[b_posicion()] = 50
+
+    #Terminar apuesta
+    elif key == 'Key.enter':
+        movimiento_ruleta.ruleta_total()
             
     l.stop()
 
-#Tablero
+
 def display():
+    """Tablero"""
     init()
     print('''
 
@@ -241,8 +252,9 @@ def display():
            ║           '''+lista[4][1]+'''║           '''+lista[4][2]+'''║           '''+lista[4][3]+'''║           '''+lista[4][4]+'''║           '''+lista[4][5]+'''║           '''+lista[4][6]+'''║
            ╚═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╝
 ''')
-#Saber donde esta el jugador para poder añadir fichas en la casilla de apuesta
+
 def b_posicion():
+    """Saber donde esta el jugador para poder añadir fichas en la casilla de apuesta"""
     if posx == 0 and posy == 0:
         return "0"
     elif posx == 0 and posy == 1:
@@ -346,8 +358,9 @@ def b_posicion():
     elif posx == 4 and posy == 6:
         return "19-36"
 
-#Comprueba la apuesta
+
 def comprobar_apuesta():
+    """Comprueba la apuesta"""
     for i in d_fichas:
         if d_fichas[i] != "":
             print("o")
