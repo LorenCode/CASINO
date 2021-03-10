@@ -210,7 +210,15 @@ def key_recorder(key):
 
     #Terminar apuesta
     elif key == 'Key.enter':
+        global ciclos
+        global p_intro
+
         movimiento_ruleta.ruleta_total()
+        comprobar_apuesta()
+        p_intro = True
+        
+
+        
             
     l.stop()
 
@@ -363,7 +371,6 @@ def comprobar_apuesta():
     """Comprueba la apuesta"""
     for i in d_fichas:
         if d_fichas[i] != "":
-            print("o")
             if i == random:
                 print("Victoria")
             else:
@@ -373,13 +380,29 @@ def comprobar_apuesta():
 
 
 #Bucle para poder jugar
-while True:
+ciclos = True
+p_intro = False
+
+while ciclos != False:
     clear()
     display()
+    print(ciclos)
     posy_2 = busqueda()
-    # comprobar_apuesta()
-    print(b_posicion())
-    print(d_fichas.keys())
     with Listener(on_press=key_recorder) as l:
        l.join()
+    clear()
+    #Condicion para decidir seguir o terminar la partida. Tambien se da la victoria o derota.
+    if p_intro == True:      
+        borrar_teclas = input("")
+        clear()
+        comprobar_apuesta()
+        seguirjugando = input("QUIERES VOLVER A APOSTAR. Presione Intro=Si o Esc=No:")
+        if seguirjugando == "si":
+            print("Seguir jugando")
+            p_intro = False
+        else:
+            print("Fin de la partida")
+            ciclos = False
 
+
+        

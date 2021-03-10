@@ -59,7 +59,7 @@ def ruleta_total():
 
     # Movimiento de la pelota en el tablero
     velocidad_vueltas = 0.05
-    for a in range(3):
+    for a in range(1):
 
         velocidad_rotacion = velocidad_vueltas
 
@@ -122,7 +122,4 @@ def ruleta_total():
             ruleta()
             sleep(velocidad_rotacion)
         velocidad_vueltas += 0.05
-
-    for c in lista_ruleta:
-        print(c)
 
