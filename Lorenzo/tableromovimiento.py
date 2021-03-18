@@ -9,7 +9,11 @@ clear = lambda: os.system('cls')
 
 
 # Resultado aleatoria
-random = "1"
+l_tablero_random = ["2 to 1 1", "2 to 1 2", "2 to 1 3","1rd 12", "2rd 12", "3rd 12", "1-18", "even", "rojo", "negro", "odd", "19-36"]
+l_random = [i for i in range(37)]
+for a in l_tablero_random:
+    l_random.append(a)
+
 
 # Se crean las listas para almacenar el tablero
 lista = []
@@ -19,26 +23,24 @@ for i in range(5):
         lista[i].append('          ')
 
 #Se crea la lista que contendra las apuestas
-# l_fichas = []
-# for i in range(49):
-#     l_fichas.append(" ")
-
 d_fichas = {}
 
-for i in range(37):
-    d_fichas[str(i)] = ""
-d_fichas["2 to 1 1"] = ""
-d_fichas["2 to 1 2"] = ""
-d_fichas["2 to 1 3"] = ""
-d_fichas["1rd 12"] = ""
-d_fichas["2rd 12"] = ""
-d_fichas["3rd 12"] = ""
-d_fichas["1-18"] = ""
-d_fichas["even"] = ""
-d_fichas["rojo"] = ""
-d_fichas["negro"] = ""
-d_fichas["odd"] = ""
-d_fichas["19-36"] = ""
+def b_fichas():   
+
+    for i in range(37):
+        d_fichas[str(i)] = ""
+    d_fichas["2 to 1 1"] = ""
+    d_fichas["2 to 1 2"] = ""
+    d_fichas["2 to 1 3"] = ""
+    d_fichas["1rd 12"] = ""
+    d_fichas["2rd 12"] = ""
+    d_fichas["3rd 12"] = ""
+    d_fichas["1-18"] = ""
+    d_fichas["even"] = ""
+    d_fichas["rojo"] = ""
+    d_fichas["negro"] = ""
+    d_fichas["odd"] = ""
+    d_fichas["19-36"] = ""
 
 
 #Posicion inicial del jugador
@@ -208,17 +210,15 @@ def key_recorder(key):
         else:
             d_fichas[b_posicion()] = 50
 
-    #Terminar apuesta
+    #Validar apuesta
     elif key == 'Key.enter':
         global ciclos
         global p_intro
 
         movimiento_ruleta.ruleta_total()
-        comprobar_apuesta()
+        fichas_apuesta()
         p_intro = True
-        
-
-        
+          
             
     l.stop()
 
@@ -367,26 +367,26 @@ def b_posicion():
         return "19-36"
 
 
-def comprobar_apuesta():
+def fichas_apuesta():
     """Comprueba la apuesta"""
+    random = choice(l_random)
+    print(random)
+    random_r = "" #Cargamos en random_r el restultado si es victoria otal vez
     for i in d_fichas:
         if d_fichas[i] != "":
             if i == random:
-                print("Victoria")
+                random_r = "Victoria"
             else:
-                print("Tal vez")
-
-
-
+                random_r = "Tal vez"
+    print(random_r)
 
 #Bucle para poder jugar
 ciclos = True
 p_intro = False
-
+b_fichas()
 while ciclos != False:
     clear()
     display()
-    print(ciclos)
     posy_2 = busqueda()
     with Listener(on_press=key_recorder) as l:
        l.join()
@@ -395,11 +395,12 @@ while ciclos != False:
     if p_intro == True:      
         borrar_teclas = input("")
         clear()
-        comprobar_apuesta()
+        fichas_apuesta()
         seguirjugando = input("QUIERES VOLVER A APOSTAR. Presione Intro=Si o Esc=No:")
         if seguirjugando == "si":
             print("Seguir jugando")
             p_intro = False
+            b_fichas() 
         else:
             print("Fin de la partida")
             ciclos = False
