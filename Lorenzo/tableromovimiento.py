@@ -9,10 +9,10 @@ clear = lambda: os.system('cls')
 
 
 # Resultado aleatoria
-l_tablero_random = ["2 to 1 1", "2 to 1 2", "2 to 1 3","1rd 12", "2rd 12", "3rd 12", "1-18", "even", "rojo", "negro", "odd", "19-36"]
+# l_tablero_random = ["2 to 1 1", "2 to 1 2", "2 to 1 3","1rd 12", "2rd 12", "3rd 12", "1-18", "even", "rojo", "negro", "odd", "19-36"]
 l_random = [i for i in range(37)]
-for a in l_tablero_random:
-    l_random.append(a)
+# for a in l_tablero_random:
+#     l_random.append(a)
 
 
 # Se crean las listas para almacenar el tablero
@@ -42,6 +42,8 @@ def b_fichas():
     d_fichas["odd"] = ""
     d_fichas["19-36"] = ""
 
+#Dinero del jugador
+dinero = 0
 
 #Posicion inicial del jugador
 posx = 1
@@ -254,7 +256,7 @@ def display():
            ║                               '''+lista[3][1]+'''  ║                               '''+lista[3][2]+'''  ║                               '''+lista[3][3]+'''  ║
            ╠═════════════════════╦═════════════════════╬═════════════════════╦═════════════════════╬═════════════════════╦═════════════════════╣
            ║                     ║                     ║                     ║                     ║                     ║                     ║
-           ║'''+Back.GREEN+"1-18".center(21)+'''║'''+"EVEN".center(21)+'''║'''+Back.RED+"ROJO".center(21)+'''║'''+Back.BLACK+"NEGRO".center(21)+'''║'''+Back.GREEN+"ODD".center(21)+'''║'''+"19-36".center(21)+Back.BLACK+'''║
+           ║'''+Back.GREEN+"1-18".center(21)+'''║'''+"PAR".center(21)+'''║'''+Back.RED+"ROJO".center(21)+'''║'''+Back.BLACK+"NEGRO".center(21)+'''║'''+Back.GREEN+"IMPAR".center(21)+'''║'''+"19-36".center(21)+Back.BLACK+'''║
            ║                     ║                     ║                     ║                     ║                     ║                     ║
            ║'''+str(d_fichas["1-18"]).center(21)+'''║'''+str(d_fichas["even"]).center(21)+'''║'''+str(d_fichas["rojo"]).center(21)+'''║'''+str(d_fichas["negro"]).center(21)+'''║'''+str(d_fichas["odd"]).center(21)+'''║'''+str(d_fichas["19-36"]).center(21)+'''║
            ║           '''+lista[4][1]+'''║           '''+lista[4][2]+'''║           '''+lista[4][3]+'''║           '''+lista[4][4]+'''║           '''+lista[4][5]+'''║           '''+lista[4][6]+'''║
@@ -366,19 +368,106 @@ def b_posicion():
     elif posx == 4 and posy == 6:
         return "19-36"
 
-
 def fichas_apuesta():
     """Comprueba la apuesta"""
+    def c_premio(a1,mul):
+        """ Calcula el premio"""
+        at = a1*mul+a1
+        return at
+
+    global dinero
+
+    print("dinero global: ", dinero)
+
+    #valor al azar
     random = choice(l_random)
-    print(random)
-    random_r = "" #Cargamos en random_r el restultado si es victoria otal vez
+
+    #Premio
+    premio = 0
+
+    #Almazena las apuestas
+    d_apuesta = {} 
+
+    #Busca en el tablero donde se a apostado y lo almazena en el diccionario
     for i in d_fichas:
         if d_fichas[i] != "":
-            if i == random:
-                random_r = "Victoria"
-            else:
-                random_r = "Tal vez"
-    print(random_r)
+            d_apuesta[i] = d_fichas[i]
+
+    #Variables para utilizar a la hora de comprobar las apuestas.
+
+    #Apuestas sencillas
+    rojo = [i for i in range(1,36,2)]   #x1
+    negro = [i for i in range(2,37,2)]  #x1
+
+    #Saber el color de random
+    g_color = ""
+    if random in rojo:
+        g_color = "rojo"
+    elif random in negro:
+        g_color = "negro"
+
+    #Apuestas múltiples
+    c1 = [i for i in range(3,37,3)] #Columna x2 -Doble columna x0.5
+    c2 = [i for i in range(2,36,3)] #Columna x2
+    c3 = [i for i in range(1,35,3)] #Columna x2
+    d1 = [i for i in range(1,13)]   #Docena x2  - Doble docena x0.5
+    d2 = [i for i in range(13,25)]  #Docena x2
+    d3 = [i for i in range(25,37)]  #Docena x2
+    a1_18 = [i for i in range(1,19)]    #x1
+    a19_36 = [i for i in range(19,37)]  #x1
+    par = [i for i in range(2,37,2)]
+    impar = [i for i in range(1,36,2)]
+
+    #Comprobando la apuesta
+    for v1 in d_apuesta:
+        premio = 0
+        print("random: ",random)
+        print("apuesta", v1)
+        if v1.isdigit():
+            if int(v1) == random:
+                print("victoria")
+                premio += c_premio(d_apuesta[v1],35)
+        else:
+            if v1 == "rojo":
+                premio += c_premio(d_apuesta[v1],1)
+            elif v1 == "negro":
+                premio += c_premio(d_apuesta[v1],1)
+            elif v1 == "1rd 12":
+                if random in d1:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "2rd 12":
+                if random in d2:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "3rd 12":
+                if random in d3:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "2 to 1 1":
+                if random in c1:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "2 to 1 2":
+                if random in c2:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "2 to 1 3":
+                if random in c3:
+                    premio += c_premio(d_apuesta[v1],2)
+            elif v1 == "1-18":
+                if random in a1_18:
+                    premio += c_premio(d_apuesta[v1],1)
+            elif v1 == "19-36":
+                if random in a19_36:
+                    premio += c_premio(d_apuesta[v1],1)
+            elif v1 == "even": 
+                if random in par:
+                    premio += c_premio(d_apuesta[v1],1)
+            elif v1 == "odd": 
+                if random in impar:
+                    premio += c_premio(d_apuesta[v1],1)
+        print("dinero antas: ", dinero)
+        print("Has gando: ",premio) 
+        dinero += premio
+        print(dinero)
+    
+
 
 #Bucle para poder jugar
 ciclos = True
@@ -388,13 +477,15 @@ while ciclos != False:
     clear()
     display()
     posy_2 = busqueda()
+    print("Dinero: ", dinero)
     with Listener(on_press=key_recorder) as l:
        l.join()
     clear()
-    #Condicion para decidir seguir o terminar la partida. Tambien se da la victoria o derota.
-    if p_intro == True:      
+    #Condicion para decidir seguir o terminar la partida. Tambien se da la victoria o derrota.
+    if p_intro == True: 
         borrar_teclas = input("")
         clear()
+  
         fichas_apuesta()
         seguirjugando = input("QUIERES VOLVER A APOSTAR. Presione Intro=Si o Esc=No:")
         if seguirjugando == "si":
