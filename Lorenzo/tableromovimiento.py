@@ -22,7 +22,7 @@ for i in range(5):
     for a in range(14):
         lista[i].append('          ')
 
-#Se crea la lista que contendra las apuestas
+#Se crea el dicionario que contendra las apuestas
 d_fichas = {}
 
 def b_fichas():   
@@ -218,9 +218,13 @@ def key_recorder(key):
         global p_intro
 
         movimiento_ruleta.ruleta_total()
-        fichas_apuesta()
         p_intro = True
-          
+    
+    #borrar apuesta
+    elif key == 'Key.backspace':
+        if d_fichas[b_posicion()] != "":
+            d_fichas[b_posicion()] = ""
+
             
     l.stop()
 
@@ -262,6 +266,7 @@ def display():
            ║           '''+lista[4][1]+'''║           '''+lista[4][2]+'''║           '''+lista[4][3]+'''║           '''+lista[4][4]+'''║           '''+lista[4][5]+'''║           '''+lista[4][6]+'''║
            ╚═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╝
 ''')
+
 
 def b_posicion():
     """Saber donde esta el jugador para poder añadir fichas en la casilla de apuesta"""
@@ -377,8 +382,6 @@ def fichas_apuesta():
 
     global dinero
 
-    print("dinero global: ", dinero)
-
     #valor al azar
     random = choice(l_random)
 
@@ -387,7 +390,7 @@ def fichas_apuesta():
 
     #Almazena las apuestas
     d_apuesta = {} 
-
+    
     #Busca en el tablero donde se a apostado y lo almazena en el diccionario
     for i in d_fichas:
         if d_fichas[i] != "":
@@ -421,11 +424,10 @@ def fichas_apuesta():
     #Comprobando la apuesta
     for v1 in d_apuesta:
         premio = 0
-        print("random: ",random)
-        print("apuesta", v1)
+        # print("random: ",random)
+        # print("apuesta", v1)
         if v1.isdigit():
             if int(v1) == random:
-                print("victoria")
                 premio += c_premio(d_apuesta[v1],35)
         else:
             if v1 == "rojo":
@@ -462,10 +464,8 @@ def fichas_apuesta():
             elif v1 == "odd": 
                 if random in impar:
                     premio += c_premio(d_apuesta[v1],1)
-        print("dinero antas: ", dinero)
         print("Has gando: ",premio) 
         dinero += premio
-        print(dinero)
     
 
 
