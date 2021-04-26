@@ -4,6 +4,7 @@ from pynput.keyboard import Listener
 from colorama import init, Fore, Back, Style
 from random import choice
 import movimiento_ruleta
+import ganar
 
 clear = lambda: os.system('cls')
 
@@ -14,6 +15,8 @@ l_random = [i for i in range(37)]
 # for a in l_tablero_random:
 #     l_random.append(a)
 
+#Inteructor de ayuda
+in_help = False
 
 # Se crean las listas para almacenar el tablero
 lista = []
@@ -43,7 +46,14 @@ def b_fichas():
     d_fichas["19-36"] = ""
 
 #Dinero del jugador
-dinero = 0
+dinero = 100
+
+#Copia del dinero
+copia_dinero = []
+def hacer_copia_dinero():
+    global copia_dinero 
+    copia_dinero = []
+    copia_dinero.append(dinero)
 
 #Posicion inicial del jugador
 posx = 1
@@ -67,6 +77,8 @@ def key_recorder(key):
     global posx
     global posy
     global lista
+    global dinero
+    global in_help
 
     
     key = str(key).replace("'", "")
@@ -193,38 +205,102 @@ def key_recorder(key):
     #MONEDAS
     #Apostar con la ficha de 5
     elif key == 'a':
-        if d_fichas[b_posicion()] != "":
-            d_fichas[b_posicion()] += 5
-        else:
-            d_fichas[b_posicion()] = 5  
+        if dinero > 0 and dinero >= 5:
+            dinero -= 5
+            if d_fichas[b_posicion()] != "":
+                    d_fichas[b_posicion()] += 5
+            else:
+                d_fichas[b_posicion()] = 5  
 
     #Apostar con la ficha de 25
     elif key == 's':
-        if d_fichas[b_posicion()] != "":
-            d_fichas[b_posicion()] += 25
-        else:
-            d_fichas[b_posicion()] = 25
+        if dinero > 0 and dinero >= 25:
+            dinero -= 25
+            if d_fichas[b_posicion()] != "":
+                d_fichas[b_posicion()] += 25
+            else:
+                d_fichas[b_posicion()] = 25
 
     #Apostar con la ficha de 50
     elif key == 'd':
-        if d_fichas[b_posicion()] != "":
-            d_fichas[b_posicion()] += 50
-        else:
-            d_fichas[b_posicion()] = 50
+         if dinero > 0 and dinero >= 50:
+            dinero -= 50
+            if d_fichas[b_posicion()] != "":
+                d_fichas[b_posicion()] += 50
+            else:
+                d_fichas[b_posicion()] = 50
+
+    #Apostar con la ficha de 100
+    elif key == 'q':
+         if dinero > 0 and dinero >= 100:
+            dinero -= 100
+            if d_fichas[b_posicion()] != "":
+                d_fichas[b_posicion()] += 100
+            else:
+                d_fichas[b_posicion()] = 100
+
+    #Apostar con la ficha de 500
+    elif key == 'w':
+         if dinero > 0 and dinero >= 500:
+            dinero -= 500
+            if d_fichas[b_posicion()] != "":
+                d_fichas[b_posicion()] += 500
+            else:
+                d_fichas[b_posicion()] = 500
+            
+    #Apostar con la ficha de 1000
+    elif key == 'd':
+         if dinero > 0 and dinero >= 1000:
+            dinero -= 1000
+            if d_fichas[b_posicion()] != "":
+                d_fichas[b_posicion()] += 1000
+            else:
+                d_fichas[b_posicion()] = 1000
 
     #Validar apuesta
     elif key == 'Key.enter':
         global ciclos
         global p_intro
 
-        movimiento_ruleta.ruleta_total()
-        p_intro = True
+
+        #Almazena las apuestas para saber si a apostado
+        t_apuesta = 0 
+    
+        #Busca en el tablero donde se a apostado y lo almazena en el diccionario
+        for i in d_fichas:
+            if d_fichas[i] != "":
+                t_apuesta += 1 
+
+        if t_apuesta > 0 :
+            movimiento_ruleta.ruleta_total()
+            p_intro = True
+        else:
+            pass
     
     #borrar apuesta
     elif key == 'Key.backspace':
         if d_fichas[b_posicion()] != "":
             d_fichas[b_posicion()] = ""
 
+    elif key == 'h':
+        if in_help:
+            in_help = False
+        else:
+            in_help = True
+
+    elif key == 't':
+        b_fichas()
+        dinero = copia_dinero[0]
+
+    elif key == 'Key.space':
+        global interructor_seguir
+        if p_intro == True: 
+            interructor_seguir = True
+            
+    elif key == 'x':
+        global int_terminar
+        if p_intro == True: 
+            int_terminar = True
             
     l.stop()
 
@@ -267,6 +343,28 @@ def display():
            ╚═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╩═════════════════════╝
 ''')
 
+def help():
+    print('''
+           ╔═════════════════════════════════════╗
+           ║   Q= 100     W= 500       E= 1000   ║   
+           ║                                     ║
+           ║   A= 5       S = 25       D = 50    ║
+           ║                                     ║
+           ║   T= Limpiar tablero                ║
+           ║   Intro= Terminar apuesta           ║
+           ║                                     ║
+           ╚═════════════════════════════════════╝
+    ''')
+
+def menu_seguir_terminar():
+    print('''
+           ╔═════════════════════════════════════╗
+           ║                                     ║
+           ║   QUIERES VOLVER A APOSTAR          ║
+           ║   espacio=Si o Esc=No               ║
+           ║                                     ║
+           ╚═════════════════════════════════════╝
+    ''')
 
 def b_posicion():
     """Saber donde esta el jugador para poder añadir fichas en la casilla de apuesta"""
@@ -422,6 +520,8 @@ def fichas_apuesta():
     impar = [i for i in range(1,36,2)]
 
     #Comprobando la apuesta
+    print("Ruleta:",random)
+
     for v1 in d_apuesta:
         premio = 0
         # print("random: ",random)
@@ -464,19 +564,26 @@ def fichas_apuesta():
             elif v1 == "odd": 
                 if random in impar:
                     premio += c_premio(d_apuesta[v1],1)
-        print("Has gando: ",premio) 
+        print("Has gando: ",premio)
         dinero += premio
+    if premio > 0:
+        ganar.g_img() 
     
 
 
 #Bucle para poder jugar
 ciclos = True
 p_intro = False
+interructor_seguir = False
+int_terminar = False
 b_fichas()
-while ciclos != False:
+hacer_copia_dinero()
+while ciclos != False:   
     clear()
     display()
     posy_2 = busqueda()
+    if in_help:
+        help()
     print("Dinero: ", dinero)
     with Listener(on_press=key_recorder) as l:
        l.join()
@@ -485,14 +592,20 @@ while ciclos != False:
     if p_intro == True: 
         borrar_teclas = input("")
         clear()
-  
+    
         fichas_apuesta()
-        seguirjugando = input("QUIERES VOLVER A APOSTAR. Presione Intro=Si o Esc=No:")
-        if seguirjugando == "si":
+        menu_seguir_terminar()
+        while (interructor_seguir != True) or (int_terminar != True): # Seguir con terminar ESC
+            with Listener(on_press=key_recorder) as l:
+                l.join()
+
+        if interructor_seguir:
             print("Seguir jugando")
             p_intro = False
-            b_fichas() 
-        else:
+            b_fichas()
+            hacer_copia_dinero()
+            interructor_seguir = False
+        elif int_terminar:
             print("Fin de la partida")
             ciclos = False
 
