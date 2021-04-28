@@ -293,6 +293,7 @@ def key_recorder(key):
         dinero = copia_dinero[0]
 
     elif key == 'Key.space':
+        print("ESTTEEEE")
         global interructor_seguir
         if p_intro == True: 
             interructor_seguir = True
@@ -301,6 +302,8 @@ def key_recorder(key):
         global int_terminar
         if p_intro == True: 
             int_terminar = True
+            print("Fin de la partida")
+            ciclos = False
             
     l.stop()
 
@@ -595,19 +598,23 @@ while ciclos != False:
     
         fichas_apuesta()
         menu_seguir_terminar()
-        while (interructor_seguir != True) or (int_terminar != True): # Seguir con terminar ESC
+        while interructor_seguir == False and int_terminar == False: # Seguir con terminar ESC
+            print(interructor_seguir)
+            print(int_terminar)
             with Listener(on_press=key_recorder) as l:
                 l.join()
+                print(interructor_seguir)
+                print(int_terminar)
+                sleep(2)
 
-        if interructor_seguir:
+        if interructor_seguir == True:
             print("Seguir jugando")
             p_intro = False
             b_fichas()
             hacer_copia_dinero()
             interructor_seguir = False
-        elif int_terminar:
-            print("Fin de la partida")
-            ciclos = False
+        # elif int_terminar == True:
+            
 
 
         
