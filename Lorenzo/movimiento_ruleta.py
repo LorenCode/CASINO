@@ -1,7 +1,8 @@
 
 import os
 from time import sleep
-from random2 import random
+# from random2 import random
+from tableromovimiento import random
 
 clear = lambda: os.system("cls")
 
@@ -304,6 +305,3 @@ def ruleta_total():
         velocidad_vueltas += 0.05
 
         contador1 -= 1
-
-print(random)
-ruleta_total()

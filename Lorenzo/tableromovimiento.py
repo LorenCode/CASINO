@@ -49,6 +49,10 @@ def b_fichas():
 #Dinero del jugador
 dinero = 100
 
+#random
+
+random = 10
+
 #Copia del dinero
 copia_dinero = []
 def hacer_copia_dinero():
@@ -263,7 +267,6 @@ def key_recorder(key):
         global ciclos
         global p_intro
 
-
         #Almazena las apuestas para saber si a apostado
         t_apuesta = 0 
     
@@ -274,6 +277,7 @@ def key_recorder(key):
 
         if t_apuesta > 0 :
             p_intro = True
+            random_m()
         else:
             pass
     
@@ -471,6 +475,12 @@ def b_posicion():
     elif posx == 4 and posy == 6:
         return "19-36"
 
+def random_m():
+    # global random
+    global random
+    #valor al azar
+    random = choice(l_random)
+
 def fichas_apuesta():
     """Comprueba la apuesta"""
     def c_premio(a1,mul):
@@ -479,10 +489,6 @@ def fichas_apuesta():
         return at
 
     global dinero
-    # global random
-
-    #valor al azar
-    random = choice(l_random)
 
     #Premio
     premio = 0
