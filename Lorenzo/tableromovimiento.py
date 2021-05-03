@@ -5,6 +5,7 @@ from colorama import init, Fore, Back, Style
 from random import choice
 import movimiento_ruleta
 import ganar
+import perder
 
 clear = lambda: os.system('cls')
 
@@ -272,15 +273,14 @@ def key_recorder(key):
                 t_apuesta += 1 
 
         if t_apuesta > 0 :
-            movimiento_ruleta.ruleta_total()
             p_intro = True
         else:
             pass
     
     #borrar apuesta
-    elif key == 'Key.backspace':
-        if d_fichas[b_posicion()] != "":
-            d_fichas[b_posicion()] = ""
+    # elif key == 'Key.backspace':
+    #     if d_fichas[b_posicion()] != "":
+    #         d_fichas[b_posicion()] = ""
 
     elif key == 'h':
         if in_help:
@@ -293,17 +293,14 @@ def key_recorder(key):
         dinero = copia_dinero[0]
 
     elif key == 'Key.space':
-        print("ESTTEEEE")
         global interructor_seguir
         if p_intro == True: 
             interructor_seguir = True
             
-    elif key == 'x':
+    elif key == 'Key.esc':
         global int_terminar
         if p_intro == True: 
             int_terminar = True
-            print("Fin de la partida")
-            ciclos = False
             
     l.stop()
 
@@ -482,6 +479,7 @@ def fichas_apuesta():
         return at
 
     global dinero
+    # global random
 
     #valor al azar
     random = choice(l_random)
@@ -567,10 +565,12 @@ def fichas_apuesta():
             elif v1 == "odd": 
                 if random in impar:
                     premio += c_premio(d_apuesta[v1],1)
-        print("Has gando: ",premio)
         dinero += premio
     if premio > 0:
+        print("Has gando: ",premio)
         ganar.g_img() 
+    else:
+        perder.p_img()
     
 
 
@@ -595,25 +595,26 @@ while ciclos != False:
     if p_intro == True: 
         borrar_teclas = input("")
         clear()
+        movimiento_ruleta.ruleta_total()
     
         fichas_apuesta()
         menu_seguir_terminar()
         while interructor_seguir == False and int_terminar == False: # Seguir con terminar ESC
-            print(interructor_seguir)
-            print(int_terminar)
             with Listener(on_press=key_recorder) as l:
                 l.join()
-                print(interructor_seguir)
-                print(int_terminar)
-                sleep(2)
-
+                
         if interructor_seguir == True:
             print("Seguir jugando")
             p_intro = False
             b_fichas()
             hacer_copia_dinero()
             interructor_seguir = False
-        # elif int_terminar == True:
+        elif int_terminar == True:
+            # borrar_teclas = input("")
+            clear()
+            perder.p_img()
+            print("Fin de la partida")
+            ciclos = False
             
 
 
