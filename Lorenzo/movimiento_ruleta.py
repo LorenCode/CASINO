@@ -1,8 +1,9 @@
 
 import os
 from time import sleep
+from random import choice
 # from random2 import random
-from tableromovimiento import random
+# from tableromovimiento import random
 
 clear = lambda: os.system("cls")
 
@@ -18,7 +19,9 @@ def ruleta_total():
     for x in range(12):
         lista_ruleta[8].append('   ')
 
-
+    archivo1 = open("archivo1.txt","r")
+    random = int(archivo1.read())
+    archivo1.close()
 
     def ruleta():
         print('''
@@ -184,8 +187,10 @@ def ruleta_total():
     # Movimiento de la pelota en el tablero
     vida = 1
 
-    contador1 = 2
-    veces = 3
+    c_veces = [2,3]
+    veces = choice(c_veces)
+    contador1 = veces-1
+    
 
     velocidad_vueltas = 0.05
     for a in range(veces):

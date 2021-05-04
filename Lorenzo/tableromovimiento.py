@@ -481,6 +481,10 @@ def random_m():
     #valor al azar
     random = choice(l_random)
 
+    archivo1 = open ("archivo1.txt","w")
+    archivo1.write(str(random))
+    archivo1.close()
+
 def fichas_apuesta():
     """Comprueba la apuesta"""
     def c_premio(a1,mul):
