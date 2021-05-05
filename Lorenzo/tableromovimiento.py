@@ -289,6 +289,9 @@ def key_recorder(key):
     elif key == 'h':
         if in_help:
             in_help = False
+            print("\033[A"*7)
+            print((50*" "+"\n")*11)
+            print("\033[A"*7)
         else:
             in_help = True
 
@@ -591,20 +594,30 @@ interructor_seguir = False
 int_terminar = False
 b_fichas()
 hacer_copia_dinero()
+clear()
+# print("\n"*33)  
+# print(("\033[F")*3,"AAA")
+# display()
 while ciclos != False:   
-    clear()
+    # print("\n"*5)
+    print("\033[A"*40)
     display()
     posy_2 = busqueda()
-    if in_help:
-        help()
     print("Dinero: ", dinero)
+    if in_help:
+        # print("\n"*5)
+        print("\033[A"*2)
+        help()
+        print("\033[A"*7)
+    
+
     with Listener(on_press=key_recorder) as l:
        l.join()
-    clear()
     #Condicion para decidir seguir o terminar la partida. Tambien se da la victoria o derrota.
     if p_intro == True: 
         borrar_teclas = input("")
-        clear()
+        
+        print("\033[F"*80)
         movimiento_ruleta.ruleta_total()
     
         fichas_apuesta()
@@ -614,16 +627,19 @@ while ciclos != False:
                 l.join()
                 
         if interructor_seguir == True:
-            print("Seguir jugando")
+            # print("Seguir jugando")
             p_intro = False
             b_fichas()
             hacer_copia_dinero()
             interructor_seguir = False
+            print("\033[A"*54)
+            print((200*" "+"\n")*54)
+            print("\033[A"*20)
         elif int_terminar == True:
             # borrar_teclas = input("")
             clear()
             perder.p_img()
-            print("Fin de la partida")
+            # print("Fin de la partida")
             ciclos = False
             
 

@@ -193,6 +193,7 @@ def ruleta_total():
     
 
     velocidad_vueltas = 0.05
+    clear()
     for a in range(veces):
 
         velocidad_rotacion = velocidad_vueltas
@@ -201,16 +202,16 @@ def ruleta_total():
         posy = 6
 
         for a in range(6):
-            clear()
+            
             lista_ruleta[posx][posy] = ' ● '
             lista_ruleta[posx][posy-1] = '   '
-            
+            print("\033[A"*38)
             ruleta()
             sleep(velocidad_rotacion)
             if posx == p1 and posy == p2 and contador1 == 0 or vida == 0 and contador1 == 0:
                 vida = 0
                 if random in [00,27,10,25,29,12]:
-                    clear()
+                    print("\033[A"*38)
 
                     ruleta()
                     sleep(2)
@@ -218,7 +219,8 @@ def ruleta_total():
                 
             posy += 1
 
-
+        # break
+        # sleep(3)
 
         if lista_ruleta[0][11] == ' ● ':
             lista_ruleta[0][11] = '   '
@@ -227,17 +229,19 @@ def ruleta_total():
                 posx = b 
                 posy = 1
 
-                clear()
+                # clear()
                 
                 lista_ruleta[b][1] = ' ● '
                 lista_ruleta[b-1][1] = '   '
+                print("\033[A"*38)
                 ruleta()
                 sleep(velocidad_rotacion)
 
                 if posx == p1 and posy == p2 and contador1 == 0 or vida == 0 and contador1 == 0:
                     vida = 0
                     if random in [8,19,31,18,6,21,33]:
-                        clear()
+                        # clear()
+                        print("\033[A"*38)
                         ruleta()
                         sleep(1)
                     break
@@ -246,10 +250,12 @@ def ruleta_total():
         for a in range(12-1,-1,-1):
             
 
-            clear()
+            # clear()
+            print("\033[A"*38)
             if posx == p1 and posy == p2 and contador1 == 0 or vida == 0 and contador1 == 0:
                 vida = 0
                 if random in [11,30,26,9,28,0,2,14,35,23,4,16]:
+                    print("\033[A"*38)
                     ruleta()
                     sleep(1)
                 break
@@ -263,14 +269,16 @@ def ruleta_total():
             posx = 8
             posy = a
             
+            print("\033[A"*38)
             ruleta()
             sleep(velocidad_rotacion)
 
         for a in range(8-1,-1,-1):
-            clear()
+            # clear()
             if posx == p1 and posy == p2  and contador1 == 0 or vida == 0 and contador1 == 0:
                 vida = 0
                 if random in [15,34,22,5,17,32,20,7,11]:
+                    print("\033[A"*38)
                     ruleta()
                     sleep(1)
                 break
@@ -284,14 +292,16 @@ def ruleta_total():
             posx = a
             posy = 0
 
+            print("\033[A"*38)
             ruleta()
             sleep(velocidad_rotacion)
 
         for a in range(1,6):
-            clear()
+            # clear()
             if posx == p1 and posy == p2 and contador1 == 0 or vida == 0 and contador1 == 0:
                 vida = 0
                 if random in [15,3,24,36,13,1]:
+                    print("\033[A"*38)
                     ruleta()
                     sleep(1)
                 break
@@ -305,8 +315,10 @@ def ruleta_total():
             posx = 0
             posy = a
 
+            print("\033[A"*38)
             ruleta()
             sleep(velocidad_rotacion)
         velocidad_vueltas += 0.05
-
+        
         contador1 -= 1
+    clear()
