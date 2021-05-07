@@ -2,6 +2,8 @@
 import os
 from time import sleep
 from random import choice
+import playsound
+import vlc
 # from random2 import random
 # from tableromovimiento import random
 
@@ -191,10 +193,21 @@ def ruleta_total():
     c_veces = [2,3]
     veces = choice(c_veces)
     contador1 = veces-1
-    
+    volumen = 80
 
     velocidad_vueltas = 0.05
     clear()
+
+    #Sonido del giro de la ruleta
+    if veces == 2:
+            p = vlc.MediaPlayer("./musica/sonido_ruleta.mp3")
+            p.audio_set_volume(volumen)
+            p.play()
+    else:
+        p = vlc.MediaPlayer("./musica/sonido_ruleta_3vueltas.mp3")
+        p.audio_set_volume(volumen)
+        p.play()
+
     for a in range(veces):
 
         velocidad_rotacion = velocidad_vueltas
@@ -216,6 +229,7 @@ def ruleta_total():
 
                     ruleta()
                     sleep(2)
+                    p.stop()
                 break
                 
             posy += 1
@@ -244,7 +258,9 @@ def ruleta_total():
                         # clear()
                         print("\033[A"*38)
                         ruleta()
+                        p.stop()
                         sleep(1)
+                        
                     break
 
 
@@ -258,7 +274,9 @@ def ruleta_total():
                 if random in [11,30,26,9,28,0,2,14,35,23,4,16]:
                     print("\033[A"*38)
                     ruleta()
+                    p.stop()
                     sleep(1)
+                    
                 break
             if lista_ruleta[7][1] == ' ● ':
                 lista_ruleta[7][1] = '   '
@@ -281,7 +299,9 @@ def ruleta_total():
                 if random in [15,34,22,5,17,32,20,7,11]:
                     print("\033[A"*38)
                     ruleta()
+                    p.stop()
                     sleep(1)
+                   
                 break
             if lista_ruleta[8][0] == ' ● ':
                 lista_ruleta[8][0] = '   '
@@ -304,7 +324,9 @@ def ruleta_total():
                 if random in [15,3,24,36,13,1]:
                     print("\033[A"*38)
                     ruleta()
+                    p.stop()
                     sleep(1)
+                    
                 break
             if lista_ruleta[0][0] == ' ● ':
                 lista_ruleta[0][0] = '   '

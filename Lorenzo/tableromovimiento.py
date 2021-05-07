@@ -6,6 +6,8 @@ from random import choice
 import movimiento_ruleta
 import ganar
 import perder
+import playsound
+import vlc
 
 clear = lambda: os.system('cls')
 
@@ -83,6 +85,8 @@ def key_recorder(key):
     global lista
     global dinero
     global in_help
+
+    volumen = 60
 
     
     key = str(key).replace("'", "")
@@ -210,6 +214,11 @@ def key_recorder(key):
     #Apostar con la ficha de 5
     elif key == 'a':
         if dinero > 0 and dinero >= 5:
+
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 5
             if d_fichas[b_posicion()] != "":
                     d_fichas[b_posicion()] += 5
@@ -219,6 +228,11 @@ def key_recorder(key):
     #Apostar con la ficha de 25
     elif key == 's':
         if dinero > 0 and dinero >= 25:
+            
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 25
             if d_fichas[b_posicion()] != "":
                 d_fichas[b_posicion()] += 25
@@ -228,6 +242,11 @@ def key_recorder(key):
     #Apostar con la ficha de 50
     elif key == 'd':
          if dinero > 0 and dinero >= 50:
+             
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 50
             if d_fichas[b_posicion()] != "":
                 d_fichas[b_posicion()] += 50
@@ -237,6 +256,11 @@ def key_recorder(key):
     #Apostar con la ficha de 100
     elif key == 'q':
          if dinero > 0 and dinero >= 100:
+             
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 100
             if d_fichas[b_posicion()] != "":
                 d_fichas[b_posicion()] += 100
@@ -246,6 +270,11 @@ def key_recorder(key):
     #Apostar con la ficha de 500
     elif key == 'w':
          if dinero > 0 and dinero >= 500:
+             
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 500
             if d_fichas[b_posicion()] != "":
                 d_fichas[b_posicion()] += 500
@@ -255,6 +284,11 @@ def key_recorder(key):
     #Apostar con la ficha de 1000
     elif key == 'd':
          if dinero > 0 and dinero >= 1000:
+             
+            ficha = vlc.MediaPlayer("./musica/fichas_poker2.mp3")
+            ficha.audio_set_volume(volumen)
+            ficha.play()
+
             dinero -= 1000
             if d_fichas[b_posicion()] != "":
                 d_fichas[b_posicion()] += 1000
