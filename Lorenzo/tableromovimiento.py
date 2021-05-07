@@ -11,10 +11,9 @@ clear = lambda: os.system('cls')
 
 
 # Resultado aleatoria
-# l_tablero_random = ["2 to 1 1", "2 to 1 2", "2 to 1 3","1rd 12", "2rd 12", "3rd 12", "1-18", "even", "rojo", "negro", "odd", "19-36"]
 l_random = [i for i in range(37)]
-# for a in l_tablero_random:
-#     l_random.append(a)
+
+
 
 #Inteructor de ayuda
 in_help = False
