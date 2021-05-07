@@ -320,6 +320,11 @@ def key_recorder(key):
     #         d_fichas[b_posicion()] = ""
 
     elif key == 'h':
+                     
+        ficha = vlc.MediaPlayer("./musica/clic.mp3")
+        ficha.audio_set_volume(80)
+        ficha.play()
+
         if in_help:
             in_help = False
             print("\033[A"*7)
@@ -329,11 +334,29 @@ def key_recorder(key):
             in_help = True
 
     elif key == 't':
-        b_fichas()
-        dinero = copia_dinero[0]
+
+        #Almazena las apuestas para saber si a apostado
+        t_apuesta = 0 
+    
+        #Busca en el tablero donde se a apostado y lo almazena en el diccionario
+        for i in d_fichas:
+            if d_fichas[i] != "":
+                t_apuesta += 1 
+        
+        if t_apuesta > 0 :
+
+            ficha = vlc.MediaPlayer("./musica/devolucion.mp3")
+            ficha.audio_set_volume(70)
+            ficha.play()
+
+            b_fichas()
+            dinero = copia_dinero[0]
 
     elif key == 'Key.space':
         global interructor_seguir
+        ficha = vlc.MediaPlayer("./musica/clic.mp3")
+        ficha.audio_set_volume(80)
+        ficha.play()
         if p_intro == True: 
             interructor_seguir = True
             
@@ -615,8 +638,17 @@ def fichas_apuesta():
     if premio > 0:
         print("Has gando: ",premio)
         ganar.g_img() 
+        ficha = vlc.MediaPlayer("./musica/victoria.mp3")
+        ficha.audio_set_volume(80)
+        ficha.play()
+        sleep(2.5)
     else:
         perder.p_img()
+        ficha = vlc.MediaPlayer("./musica/perder1.1.mp3")
+        ficha.audio_set_volume(80)
+        ficha.play()
+        sleep(4)
+
     
 
 
@@ -628,17 +660,15 @@ int_terminar = False
 b_fichas()
 hacer_copia_dinero()
 clear()
-# print("\n"*33)  
-# print(("\033[F")*3,"AAA")
-# display()
+
 while ciclos != False:   
-    # print("\n"*5)
+
     print("\033[A"*40)
     display()
     posy_2 = busqueda()
-    print("Dinero: ", dinero)
+    print("Dinero: ", dinero,+10*" ")
     if in_help:
-        # print("\n"*5)
+
         print("\033[A"*2)
         help()
         print("\033[A"*7)
@@ -672,6 +702,10 @@ while ciclos != False:
             # borrar_teclas = input("")
             clear()
             perder.p_img()
+            ficha = vlc.MediaPlayer("./musica/salir.mp3")
+            ficha.audio_set_volume(80)
+            ficha.play()
+            sleep(4)
             # print("Fin de la partida")
             ciclos = False
             
