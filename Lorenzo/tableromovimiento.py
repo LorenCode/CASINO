@@ -6,6 +6,8 @@ from random import choice
 import movimiento_ruleta
 import ganar
 import perder
+import playsound
+import vlc
 
 clear = lambda: os.system('cls')
 

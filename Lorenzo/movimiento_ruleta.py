@@ -2,6 +2,8 @@
 import os
 from time import sleep
 from random import choice
+import playsound
+import vlc
 # from random2 import random
 # from tableromovimiento import random
 
@@ -190,11 +192,19 @@ def ruleta_total():
     c_veces = [2,3]
     veces = choice(c_veces)
     contador1 = veces-1
-    
+    volumen = 80
 
     velocidad_vueltas = 0.05
     clear()
     for a in range(veces):
+        if a == 1:
+            p = vlc.MediaPlayer("./musica/sonido_ruleta.mp3")
+            p.audio_set_volume(80)
+            p.play()
+        else:
+            p = vlc.MediaPlayer("./musica/sonido_ruleta.mp3")
+            p.audio_set_volume(80)
+            p.play()
 
         velocidad_rotacion = velocidad_vueltas
 
